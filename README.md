@@ -13,14 +13,14 @@ This is an early draft and published only for discussion, but not for a broader 
 # Motivation
 
 With the recent internal leaks of user passwords into log files at twitter and github, the question arises if a server should be trusted with a user's password at any given time. 
-This draft suggests the use of a technique labeled as ["UserId-Salted-Client-Plus-Random-Salted-Server"](http://ithare.com/client-plus-server-password-hashing-as-a-potential-way-to-improve-security-against-brute-force-attacks-without-overloading-server/), which was originally discussed to reduce server load by moving parts of the password hashing to the client.
+This draft suggests the use of a technique originally labeled as ["UserId-Salted-Client-Plus-Random-Salted-Server"](http://ithare.com/client-plus-server-password-hashing-as-a-potential-way-to-improve-security-against-brute-force-attacks-without-overloading-server/), which was originally discussed to reduce server load by moving parts of the password hashing to the client.
 In doing so, the users' password is protected from attackers that have gained control over the host or the network between a SSL-terminating load balancer and the host. Also, the password is protected against accidental logging, which now has become a known risk.
 
 ## Summary
 
 In the described scheme, a server publishes a public pepper, which is combined with the users' id to form a non-random salt. The password is then hashed cryptographically on the client side. The resulting hash is sent to the server, where it is combined with a per-user random salt and hashed again.
 
-So the client sends Hash(<static-pepper>+<user-id>, <password>) to the server, which calculates and stores Hash(<random-salt>, Hash(<static-pepper>+<user-id>, <password>)).
+So the client sends Hash({static-pepper}+{user-id}, {password}) to the server, which calculates and stores Hash({random-salt}, Hash({static-pepper}+{user-id}, {password})).
 
 ## Pros
 
