@@ -20,7 +20,7 @@ In doing so, the users' password is protected from attackers that have gained co
 
 In the described scheme, a server publishes a public pepper, which is combined with the users' id to form a non-random salt. The password is then hashed cryptographically on the client side. The resulting hash is sent to the server, where it is combined with a per-user random salt and hashed again.
 
-So the client sends Hash({static-pepper}+{user-id}, {password}) to the server, which calculates and stores Hash({random-salt}, Hash({static-pepper}+{user-id}, {password})).
+So the client sends `Hash({static-pepper}+{user-id}, {password})` to the server, which calculates and stores `Hash({random-salt}, Hash({static-pepper}+{user-id}, {password}))`.
 
 ## Pros
 
